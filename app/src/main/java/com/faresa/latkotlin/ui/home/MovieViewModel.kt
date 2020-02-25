@@ -1,4 +1,4 @@
-package com.faresa.latkotlin.ui
+package com.faresa.latkotlin.ui.home
 
 import android.util.Log
 import androidx.lifecycle.LiveData

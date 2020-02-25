@@ -2,31 +2,33 @@ package com.faresa.latkotlin.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.faresa.latkotlin.R
-import com.faresa.latkotlin.adapter.Adapter
-import com.faresa.latkotlin.model.MovieItemResponse
-import kotlinx.android.synthetic.main.activity_main.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var viewModel: MovieViewModel
-    private lateinit var adapter: Adapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        viewModel = ViewModelProviders.of(this).get(MovieViewModel::class.java)
-        viewModel.init(1)
-        viewModel.getData().observe(this, Observer { movie->
-           getinit(movie)
-        })
-    }
+        val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
-    private fun getinit(list: List<MovieItemResponse>) {
-        adapter = Adapter(list)
-        rv.adapter = adapter
+        val navController = findNavController(R.id.nav_host_fragment)
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_movie, R.id.navigation_show, R.id.navigation_notifications
+            )
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
+
 
     }
 }
+
